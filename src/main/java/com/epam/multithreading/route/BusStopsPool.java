@@ -17,5 +17,4 @@ public enum BusStopsPool {
         this.busStopsPool = busStopsPool;
     }
 
-
 }

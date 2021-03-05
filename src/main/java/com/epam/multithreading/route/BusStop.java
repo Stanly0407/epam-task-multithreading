@@ -44,25 +44,26 @@ public class BusStop {
 
         System.out.println("Bus No. " + bus.getBusNumber() + " STARTED LOADING and Unloading passengers at the bus stop No. "
                 + this.busStopNumber);
+        try {
+            locking.lock();
 
-        locking.lock();
+            TimeUnit.SECONDS.sleep(2);
 
-        TimeUnit.SECONDS.sleep(2);
+            // change logic!
+            int passengersInTheBus = bus.getPassengers();
+            int passengersAtTheBusStop = getPassengers();
+            if (passengersInTheBus >= 4 && passengersAtTheBusStop >= 4) {
+                bus.setPassengers(passengersInTheBus - 4);
+                this.setPassengers(passengersAtTheBusStop - 3);
+            }
 
-        // change logic!
-        int passengersInTheBus = bus.getPassengers();
-        int passengersAtTheBusStop = getPassengers();
-        if (passengersInTheBus >= 4 && passengersAtTheBusStop >= 4) {
-            bus.setPassengers(passengersInTheBus - 4);
-            this.setPassengers(passengersAtTheBusStop - 3);
+            TimeUnit.SECONDS.sleep(2);
+        } finally {
+            locking.unlock();
+            System.out.println("Bus No. " + bus.getBusNumber() + " FINISHED LOADING and Unloading passengers at the bus stop No. "
+                    + this.busStopNumber);
         }
 
-        TimeUnit.SECONDS.sleep(2);
-
-        locking.unlock();
-
-        System.out.println("Bus No. " + bus.getBusNumber() + " FINISHED LOADING and Unloading passengers at the bus stop No. "
-                + this.busStopNumber);
     }
 
 

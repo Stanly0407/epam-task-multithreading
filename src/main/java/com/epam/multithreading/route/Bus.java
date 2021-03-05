@@ -6,7 +6,7 @@ import java.util.List;
 public class Bus implements Runnable {
 
     private int busNumber;
-      private int passengers; // change!
+    private int passengers;
     private List<Integer> routePlan;
 
     public Bus(int busNumber, int passengers, List<Integer> routePlan) {
@@ -17,7 +17,7 @@ public class Bus implements Runnable {
 
     @Override
     public void run() {
-        BusStopsPool busStopsPool = BusStopsPool.INSTANCE; // the bus got bus stops
+        BusStopsPool busStopsPool = BusStopsPool.INSTANCE;
 
         for (Integer busStopNumber : routePlan) { // the bus makes stops according to the route plan
 
@@ -25,16 +25,11 @@ public class Bus implements Runnable {
 
             busStopsPool.getBusStop(busStopNumber).makeStop(this);
         }
-
         System.out.println("The BUS No." + getBusNumber() + " FINISHED THE ROUTE!____________");
     }
 
     public int getBusNumber() {
         return busNumber;
-    }
-
-    public void setBusNumber(int busNumber) {
-        this.busNumber = busNumber;
     }
 
     public int getPassengers() {

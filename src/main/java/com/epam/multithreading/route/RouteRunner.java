@@ -5,7 +5,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class RouteRunner {
-    //private static final String DATA = "input.json";
 
     public static void main(String[] args) {
         BusStop busStop1001 = new BusStop(1001, 2, 15);
