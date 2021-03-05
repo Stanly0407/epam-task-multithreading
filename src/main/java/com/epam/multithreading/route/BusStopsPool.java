@@ -9,7 +9,6 @@ public enum BusStopsPool {
 
     private Map<Integer, BusStop> busStopsPool;
 
-
     public BusStop getBusStop(int busStopNumber) {
         return busStopsPool.get(busStopNumber);
     }
@@ -18,10 +17,5 @@ public enum BusStopsPool {
         this.busStopsPool = busStopsPool;
     }
 
-    @Override
-    public String toString() {
-        return "BusStopsPool{" +
-                "busStopsPool=" + busStopsPool +
-                '}';
-    }
+
 }

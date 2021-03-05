@@ -6,7 +6,7 @@ import java.util.List;
 public class Bus implements Runnable {
 
     private int busNumber;
-    private int passengers;
+      private int passengers; // change!
     private List<Integer> routePlan;
 
     public Bus(int busNumber, int passengers, List<Integer> routePlan) {

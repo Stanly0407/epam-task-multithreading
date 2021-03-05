@@ -2,24 +2,20 @@ package com.epam.multithreading.route;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class BusStop {
 
-    private int maxAvailableBusCapacity;
     private int busStopNumber;
-    private Semaphore semaphore; // available
-
+    private Semaphore semaphore;
     private int passengers;
-//    private ReentrantLock lock = new ReentrantLock(true);
-//    private Condition condition = lock.newCondition();
+    private ReentrantLock locking = new ReentrantLock(true);
 
     public BusStop(int busStopNumber, int maxAvailableBusCapacity, int passengers) {
         this.busStopNumber = busStopNumber;
-        this.maxAvailableBusCapacity = maxAvailableBusCapacity;
         this.passengers = passengers;
         this.semaphore = new Semaphore(maxAvailableBusCapacity, true);
     }
-
 
     public void makeStop(Bus bus) {
         try {
@@ -27,7 +23,7 @@ public class BusStop {
             System.out.println("Bus No. " + bus.getBusNumber() + " pull into the bus stop No. " + busStopNumber);
             TimeUnit.SECONDS.sleep(1);
 
-            passengersLoadingAndUnloading(bus);
+            loadingAndUnloadingPassengers(bus);
 
             TimeUnit.SECONDS.sleep(1);
 
@@ -43,28 +39,29 @@ public class BusStop {
         }
     }
 
-    public void passengersLoadingAndUnloading(Bus bus) throws InterruptedException {
+    public void loadingAndUnloadingPassengers(Bus bus) throws InterruptedException {
         TimeUnit.SECONDS.sleep(1);
 
-        System.out.println("Bus No. " + bus.getBusNumber() + " started Loading and Unloading passengers at the bus stop No. "
+        System.out.println("Bus No. " + bus.getBusNumber() + " STARTED LOADING and Unloading passengers at the bus stop No. "
                 + this.busStopNumber);
 
-        //  condition.await();
+        locking.lock();
+
         TimeUnit.SECONDS.sleep(2);
 
-        // CHANGE LOGIC!
+        // change logic!
         int passengersInTheBus = bus.getPassengers();
         int passengersAtTheBusStop = getPassengers();
-        if (passengersInTheBus >= 2 && passengersAtTheBusStop >= 2) {
+        if (passengersInTheBus >= 4 && passengersAtTheBusStop >= 4) {
             bus.setPassengers(passengersInTheBus - 4);
             this.setPassengers(passengersAtTheBusStop - 3);
         }
 
         TimeUnit.SECONDS.sleep(2);
 
+        locking.unlock();
 
-        //   condition.signal();
-        System.out.println("Bus No. " + bus.getBusNumber() + " finished Loading and Unloading passengers at the bus stop No. "
+        System.out.println("Bus No. " + bus.getBusNumber() + " FINISHED LOADING and Unloading passengers at the bus stop No. "
                 + this.busStopNumber);
     }
 
@@ -77,29 +74,8 @@ public class BusStop {
         this.passengers = passengers;
     }
 
-    public int getMaxAvailableBusCapacity() {
-        return maxAvailableBusCapacity;
-    }
-
-    public void setMaxAvailableBusCapacity(int maxAvailableBusCapacity) {
-        this.maxAvailableBusCapacity = maxAvailableBusCapacity;
-    }
-
     public int getBusStopNumber() {
         return busStopNumber;
     }
-
-    public void setBusStopNumber(int busStopNumber) {
-        this.busStopNumber = busStopNumber;
-    }
-
-    public Semaphore getSemaphore() {
-        return semaphore;
-    }
-
-    public void setSemaphore(Semaphore semaphore) {
-        this.semaphore = semaphore;
-    }
-
 
 }
