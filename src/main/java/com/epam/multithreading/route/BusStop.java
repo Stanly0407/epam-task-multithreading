@@ -47,9 +47,9 @@ public class BusStop {
         try {
             locking.lock();
 
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(3);
 
-            // change logic!
+            // change
             int passengersInTheBus = bus.getPassengers();
             int passengersAtTheBusStop = getPassengers();
             if (passengersInTheBus >= 4 && passengersAtTheBusStop >= 4) {
@@ -57,15 +57,12 @@ public class BusStop {
                 this.setPassengers(passengersAtTheBusStop - 3);
             }
 
-            TimeUnit.SECONDS.sleep(2);
         } finally {
             locking.unlock();
             System.out.println("Bus No. " + bus.getBusNumber() + " FINISHED LOADING and Unloading passengers at the bus stop No. "
                     + this.busStopNumber);
         }
-
     }
-
 
     public int getPassengers() {
         return passengers;

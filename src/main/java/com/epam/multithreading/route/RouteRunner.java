@@ -32,7 +32,7 @@ public class RouteRunner {
                 new Bus(6, 8, new ArrayList<>(Arrays.asList(1001, 2002, 3003, 5005))),
                 new Bus(7, 5, new ArrayList<>(Arrays.asList(1001, 5005, 2002, 3003))),
                 new Bus(8, 6, new ArrayList<>(Arrays.asList(4004, 5005, 3003))),
-                new Bus(9, 8, new ArrayList<>(Arrays.asList(1001, 2002)))
+                new Bus(9, 8, new ArrayList<>(Arrays.asList(1001, 5005)))
         ));
 
         int numberOfBuses = buses.size();
