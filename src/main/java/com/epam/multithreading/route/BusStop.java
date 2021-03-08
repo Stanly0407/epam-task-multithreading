@@ -1,75 +1,76 @@
 package com.epam.multithreading.route;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class BusStop {
 
+    private static final Logger LOGGER = LogManager.getLogger(BusStop.class);
+
     private int busStopNumber;
-    private Semaphore semaphore;
-    private int passengers;
+    private int busStopPassengers;
+    private Semaphore busStopSemaphore;
     private ReentrantLock locking = new ReentrantLock(true);
 
-    public BusStop(int busStopNumber, int maxAvailableBusCapacity, int passengers) {
+    @JsonCreator
+    public BusStop(@JsonProperty("busStopNumber") int busStopNumber,
+                   @JsonProperty("maxAvailableBusCapacity") int maxAvailableBusCapacity,
+                   @JsonProperty("busStopPassengers") int busStopPassengers) {
         this.busStopNumber = busStopNumber;
-        this.passengers = passengers;
-        this.semaphore = new Semaphore(maxAvailableBusCapacity, true);
+        this.busStopPassengers = busStopPassengers;
+        this.busStopSemaphore = new Semaphore(maxAvailableBusCapacity, true);
     }
 
     public void makeStop(Bus bus) {
         try {
-            semaphore.acquire(); // trying to enter the bus stop
-            System.out.println("Bus No. " + bus.getBusNumber() + " pull into the bus stop No. " + busStopNumber);
-            TimeUnit.SECONDS.sleep(1);
+            busStopSemaphore.acquire();
 
-            loadingAndUnloadingPassengers(bus);
+            LOGGER.debug("The Bus No. " + bus.getBusNumber() + " pull into the bus stop No. " + busStopNumber);
 
-            TimeUnit.SECONDS.sleep(1);
+            transferPassengers(bus);
 
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         } finally {
-            semaphore.release();
-            System.out.println("**********************************\n"
-                    + "Bus No. " + bus.getBusNumber() + " left the bus stop No. " + busStopNumber + "\n"
-                    + "At the bus stop No." + getBusStopNumber() + " ===> " + getPassengers() + " waiting passengers" + "\n"
-                    + "The bus stop No. " + bus.getBusNumber() + " ===> carries " + bus.getPassengers() + " passengers" + "\n" +
-                    "************************************");
+
+            busStopSemaphore.release();
+
+            LOGGER.debug("\nThe Bus No. " + bus.getBusNumber() + " left the bus stop No. " + busStopNumber + "\n" +
+                    "At the bus stop No." + busStopNumber + " ===> " + busStopPassengers + " waiting passengers \n" +
+                    "The bus stop No. " + bus.getBusNumber() + " ===> carries " + bus.getBusPassengers() + " passengers");
         }
     }
 
-    public void loadingAndUnloadingPassengers(Bus bus) throws InterruptedException {
-        TimeUnit.SECONDS.sleep(1);
-
-        System.out.println("Bus No. " + bus.getBusNumber() + " STARTED LOADING and Unloading passengers at the bus stop No. "
-                + this.busStopNumber);
+    public void transferPassengers(Bus bus) {
+        LOGGER.debug("The Bus No. " + bus.getBusNumber() + " STARTED TRANSFER  passengers at the bus stop No. " + busStopNumber);
         try {
             locking.lock();
 
-            TimeUnit.SECONDS.sleep(3);
-
-            // change
-            int passengersInTheBus = bus.getPassengers();
-            int passengersAtTheBusStop = getPassengers();
-            if (passengersInTheBus >= 4 && passengersAtTheBusStop >= 4) {
-                bus.setPassengers(passengersInTheBus - 4);
-                this.setPassengers(passengersAtTheBusStop - 3);
-            }
+            int busPassengers = bus.getBusPassengers();
+            int busStopPassengers = this.getBusStopPassengers();
+            int leftBusPassengers = (int) (Math.random() * busPassengers);
+            int enteredBusPassengers = (int) (Math.random() * busStopPassengers);
+            bus.setBusPassengers(busPassengers - leftBusPassengers + enteredBusPassengers);
+            int leftBusStopPassengers = (int) (Math.random() * leftBusPassengers);
+            this.setBusStopPassengers(busStopPassengers + leftBusPassengers - leftBusStopPassengers - enteredBusPassengers);
 
         } finally {
             locking.unlock();
-            System.out.println("Bus No. " + bus.getBusNumber() + " FINISHED LOADING and Unloading passengers at the bus stop No. "
-                    + this.busStopNumber);
+            LOGGER.debug("The Bus No. " + bus.getBusNumber() + " FINISHED LOADING passengers at the bus stop No. " + busStopNumber);
         }
     }
 
-    public int getPassengers() {
-        return passengers;
+    public int getBusStopPassengers() {
+        return busStopPassengers;
     }
 
-    public void setPassengers(int passengers) {
-        this.passengers = passengers;
+    public void setBusStopPassengers(int busStopPassengers) {
+        this.busStopPassengers = busStopPassengers;
     }
 
     public int getBusStopNumber() {
