@@ -47,10 +47,10 @@ public class BusStop {
     }
 
     public void transferPassengers(Bus bus) {
-        LOGGER.debug("The Bus No. " + bus.getBusNumber() + " STARTED TRANSFER  passengers at the bus stop No. " + busStopNumber);
         try {
             locking.lock();
-
+            
+            LOGGER.debug("The Bus No. " + bus.getBusNumber() + " STARTED TRANSFER  passengers at the bus stop No. " + busStopNumber);
             int busPassengers = bus.getBusPassengers();
             int busStopPassengers = this.getBusStopPassengers();
             int leftBusPassengers = (int) (Math.random() * busPassengers);

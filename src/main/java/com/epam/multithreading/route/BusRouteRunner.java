@@ -22,10 +22,8 @@ public class BusRouteRunner {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        List<Bus> buses = objectMapper.readValue(BUSES_RESOURCE, new TypeReference<>() {
-        });
-        Map<Integer, BusStop> busStops = objectMapper.readValue(BUS_STOPS_RESOURCE, new TypeReference<>() {
-        });
+        List<Bus> buses = objectMapper.readValue(BUSES_RESOURCE, new TypeReference<>() {});
+        Map<Integer, BusStop> busStops = objectMapper.readValue(BUS_STOPS_RESOURCE, new TypeReference<>() {});
 
         BusStopsPool busStopsPool = BusStopsPool.INSTANCE;
         busStopsPool.setBusStopsPool(busStops);

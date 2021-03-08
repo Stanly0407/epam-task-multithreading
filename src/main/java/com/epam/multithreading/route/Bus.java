@@ -27,7 +27,6 @@ public class Bus implements Runnable {
 
     @Override
     public void run() {
-
         BusStopsPool busStopsPool = BusStopsPool.INSTANCE;
 
         // the bus makes stops according to the route plan
