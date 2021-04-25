@@ -1,0 +1,27 @@
+{
+  "2002": {
+    "busStopNumber": 2002,
+    "maxAvailableBusCapacity": 3,
+    "busStopPassengers": 9
+  },
+  "4004": {
+    "busStopNumber": 4004,
+    "maxAvailableBusCapacity": 2,
+    "busStopPassengers": 25
+  },
+  "1001": {
+    "busStopNumber": 1001,
+    "maxAvailableBusCapacity": 2,
+    "busStopPassengers": 15
+  },
+  "3003": {
+    "busStopNumber": 3003,
+    "maxAvailableBusCapacity": 2,
+    "busStopPassengers": 17
+  },
+  "5005": {
+    "busStopNumber": 5005,
+    "maxAvailableBusCapacity": 3,
+    "busStopPassengers": 7
+  }
+}

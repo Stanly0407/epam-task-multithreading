@@ -1,0 +1,89 @@
+[
+  {
+    "busNumber": 1,
+    "busPassengers": 5,
+    "routePlan": [
+      1001,
+      2002
+    ]
+  },
+  {
+    "busNumber": 2,
+    "busPassengers": 6,
+    "routePlan": [
+      4004,
+      5005,
+      3003
+    ]
+  },
+  {
+    "busNumber": 3,
+    "busPassengers": 8,
+    "routePlan": [
+      1001,
+      2002,
+      3003,
+      2002
+    ]
+  },
+  {
+    "busNumber": 4,
+    "busPassengers": 5,
+    "routePlan": [
+      1001,
+      5005,
+      4004,
+      5005,
+      2002
+    ]
+  },
+  {
+    "busNumber": 5,
+    "busPassengers": 6,
+    "routePlan": [
+      4004,
+      5005,
+      3003,
+      2002,
+      5005,
+      1001
+    ]
+  },
+  {
+    "busNumber": 6,
+    "busPassengers": 8,
+    "routePlan": [
+      1001,
+      2002,
+      3003,
+      5005
+    ]
+  },
+  {
+    "busNumber": 7,
+    "busPassengers": 5,
+    "routePlan": [
+      1001,
+      5005,
+      2002,
+      3003
+    ]
+  },
+  {
+    "busNumber": 8,
+    "busPassengers": 6,
+    "routePlan": [
+      4004,
+      5005,
+      3003
+    ]
+  },
+  {
+    "busNumber": 9,
+    "busPassengers": 8,
+    "routePlan": [
+      1001,
+      5005
+    ]
+  }
+]
